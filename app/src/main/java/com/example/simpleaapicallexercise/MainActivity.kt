@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
@@ -89,7 +90,26 @@ class MainActivity : AppCompatActivity() {
 
             Log.i("JSON RESPONSE RESULT", result!!)
 
-            val jsonObject = JSONObject(result)
+            val responseData = Gson().fromJson(result, ResponseData::class.java)
+            Log.i("Message", responseData.message)
+            Log.i("User Id", "${responseData.user_id}")
+            Log.i("Name", responseData.name)
+            Log.i("Email", responseData.email)
+            Log.i("Mobile", "${responseData.mobile}")
+
+            Log.i("Is Profile Completed", "${responseData.profile_details.is_profile_completed}")
+            Log.i("Rating", "${responseData.profile_details.rating}")
+
+            Log.i("Data List Size", "${responseData.data_list.size}")
+
+            for (item in responseData.data_list.indices) {
+                Log.i("Value $item", "${responseData.data_list[item]}")
+
+                Log.i("ID", "${responseData.data_list[item].id}")
+                Log.i("Value", "${responseData.data_list[item].value}")
+            }
+
+          /*  val jsonObject = JSONObject(result)
 
             val message = jsonObject.optString("message")
             Log.i("Message", message)
@@ -127,9 +147,10 @@ class MainActivity : AppCompatActivity() {
 
                 val value = dataItemObject.optString("value")
                 Log.i("Value", "$value")
+
+           */
             }
 
-            Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
+            //Toast.makeText(this@MainActivity, message, Toast.LENGTH_SHORT).show()
         }
     }
-}
