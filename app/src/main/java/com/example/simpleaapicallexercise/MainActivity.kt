@@ -5,6 +5,7 @@ import android.os.AsyncTask
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
@@ -33,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             var result: String
             var connection: HttpURLConnection? = null
             try {
-                var url= URL("https://run.mocky.io/v3/f1769bf0-3b02-4d13-a248-47b42a70485b")
+                var url= URL("https://run.mocky.io/v3/8da76dd1-f833-4c69-9018-efa05dd49983")
                 connection = url.openConnection() as HttpURLConnection
                 connection.doInput = true
                 connection.doOutput = true
@@ -86,6 +87,12 @@ class MainActivity : AppCompatActivity() {
             cancelProgressDialog()
 
             Log.i("JSON RESPONSE RESULT",result!!)
+
+            val jsonObject = JSONObject(result)
+
+            val message = jsonObject.optString("message")
+
+            Log.i("message", message)
         }
     }
 
